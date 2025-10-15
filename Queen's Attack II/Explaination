@@ -1,0 +1,7 @@
+The program calculates how many squares a queen can attack on an n × n chessboard. 
+It first lists all 8 directions the queen can move—up, down, left, right, and diagonals. 
+Then, it stores all obstacles so the queen will stop before hitting them.
+Starting from the queen’s position, the program moves step by step in each direction, checking if the new position is still inside the board and not blocked by an obstacle.
+If the square is clear, it counts it as attackable and continues moving.
+Once an obstacle or the board edge is reached, it switches to the next direction.
+After checking all directions, it returns the total number of squares the queen can attack.
