@@ -1,0 +1,3 @@
+The program finds the next word that comes after the given word in alphabetical order. 
+It looks at the word from the end to find where the order of letters changes, then swaps some letters to make a new word that is just a little bigger.
+After swapping, it arranges the remaining letters in order to make it the smallest possible next word. If it cannot make a bigger word, it shows “no answer.”
