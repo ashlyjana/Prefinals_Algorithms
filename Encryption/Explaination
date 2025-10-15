@@ -1,0 +1,4 @@
+The program reads a string, removes all spaces, and then arranges its characters into a grid with rows and columns based on the square root of the string’s length.
+If the grid isn’t big enough to fit all characters, it adds an extra row. 
+The characters are placed row by row into this grid, and then the encrypted message is formed by reading the grid column by column, skipping empty spots, and joining each column’s characters with spaces. 
+In simple terms, it hides the message by rearranging the letters vertically instead of horizontally.
