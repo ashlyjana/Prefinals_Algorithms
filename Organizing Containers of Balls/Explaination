@@ -1,0 +1,4 @@
+The program checks if balls in containers can be rearranged so that each container holds only one type of ball. 
+It first finds the total number of balls in each container (row sum) and the total number of each ball type (column sum). 
+Then it sorts both lists and compares them. If every container’s capacity matches exactly one ball type’s total, it means we can rearrange the balls — so the output is “Possible”. 
+If they don’t match, it means it can’t be done — so the output is “Impossible”.
