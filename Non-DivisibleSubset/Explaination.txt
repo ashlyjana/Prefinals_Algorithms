@@ -1,0 +1,9 @@
+The program begins by obtaining the input values k and list s.
+ It makes a list to count how many numbers have the same remainder when divided by k.
+ For each number in s, it finds the remainder and adds it to that count. 
+Then it sets a variable count to 0.
+ If there are numbers with a remainder of 0, it adds 1 to the count because only one of them can be chosen. 
+Next, it checks each remainder from 1 to k/2.
+ If the remainder i is equal to k-i, it adds 1 to the count, meaning only one number can be taken from that pair. 
+If not, it adds the larger count between the two remainders.
+ Finally, it outputs count, which is the biggest possible group of numbers where no two numbers add up to be divisible by k, and the program ends.
