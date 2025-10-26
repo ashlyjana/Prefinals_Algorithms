@@ -26,30 +26,62 @@ class Result
 
     public static int activityNotifications(List<int> expenditure, int d)
     {
-        int count = 0;
-        int n = expenditure.Count;
-        for (int i = d; i < n; i++)
+        int notifications = 0;
+        int[] count = new int[201]; 
+
+        for (int i = 0; i < d; i++)
+            count[expenditure[i]]++;
+
+        for (int i = d; i < expenditure.Count; i++)
         {
-            List<int> trailingExpenditures = expenditure.GetRange(i - d, d);
-            trailingExpenditures.Sort();
-            double median;
-            if (d % 2 == 0)
-            {
-                median = (trailingExpenditures[d / 2 - 1] + trailingExpenditures[d / 2]) / 2.0;
-            }
-            else
-            {
-                median = trailingExpenditures[d / 2];
-            }
+            double median = GetMedian(count, d);
+
             if (expenditure[i] >= 2 * median)
+                notifications++;
+
+            // Slide the window
+            count[expenditure[i - d]]--;
+            count[expenditure[i]]++;    
+        }
+
+        return notifications;
+    }
+        private static double GetMedian(int[] count, int d)
+    {
+        int sum = 0;
+
+        if (d % 2 == 1)
+        {
+            int mid = d / 2 + 1;
+            for (int i = 0; i < count.Length; i++)
             {
-                count++;
+                sum += count[i];
+                if (sum >= mid)
+                    return i;
             }
         }
-        return count;
+        else
+        {
+            int mid1 = d / 2;
+            int mid2 = mid1 + 1;
+            int m1 = -1, m2 = -1;
 
+            for (int i = 0; i < count.Length; i++)
+            {
+                sum += count[i];
+                if (m1 == -1 && sum >= mid1)
+                    m1 = i;
+                if (sum >= mid2)
+                {
+                    m2 = i;
+                    break;
+                }
+            }
+            return (m1 + m2) / 2.0;
+        }
+
+        return 0;
     }
-
 }
 
 class Solution
