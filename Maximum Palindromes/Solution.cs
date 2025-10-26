@@ -20,35 +20,70 @@ class Result
      *
      * The function accepts STRING s as parameter.
      */
+    const long MOD = 1000000007;
+    const int MAX = 100000;
+    static long[] fact = new long[MAX + 1];
+    static long[] invFact = new long[MAX + 1];
+    static int[,] prefix = new int[26, MAX + 1];
+    static string str;
 
-    public static void initialize(string s)
+    static void Precompute()
     {
-        // This function is called once before all queries.
+        fact[0] = 1;
+        for (int i = 1; i <= MAX; i++)
+            fact[i] = (fact[i - 1] * i) % MOD;
 
+        invFact[MAX] = ModPow(fact[MAX], MOD - 2);
+        for (int i = MAX - 1; i >= 0; i--)
+            invFact[i] = (invFact[i + 1] * (i + 1)) % MOD;
     }
 
-    /*
-     * Complete the 'answerQuery' function below.
-     *
-     * The function is expected to return an INTEGER.
-     * The function accepts following parameters:
-     *  1. INTEGER l
-     *  2. INTEGER r
-     */
+    static long ModPow(long baseVal, long exp)
+    {
+        long res = 1;
+        baseVal %= MOD;
+        while (exp > 0)
+        {
+            if ((exp & 1) == 1)
+                res = (res * baseVal) % MOD;
+            baseVal = (baseVal * baseVal) % MOD;
+            exp >>= 1;
+        }
+        return res;
+    }
+    public static void initialize(string s)
+    {
+      str = s;
+        Precompute();
 
+        int n = s.Length;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < 26; j++)
+                prefix[j, i + 1] = prefix[j, i];
+            prefix[s[i] - 'a', i + 1]++;
+        }
+}
     public static int answerQuery(int l, int r)
     {
-        int count = 0;
-        for (int i = l; i <= r; i++)
+    int[] count = new int[26];
+        for (int j = 0; j < 26; j++)
+            count[j] = prefix[j, r] - prefix[j, l - 1];
+
+        int pairs = 0, odds = 0;
+        foreach (int c in count)
         {
-            if (i % 2 == 0)
-            {
-                count++;
-            }
+            pairs += c / 2;
+            if (c % 2 == 1) odds++;
         }
-        return count;
 
+        long res = fact[pairs];
+        foreach (int c in count)
+            res = (res * invFact[c / 2]) % MOD;
 
+        if (odds > 0) res = (res * odds) % MOD;
+
+        return (int)(res % MOD);
     }
 
 }
